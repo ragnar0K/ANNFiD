@@ -151,7 +151,7 @@ public class MFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_NNBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ManniacMain mm = new ManniacMain();
+        ANNFiDMain mm = new ANNFiDMain();
         mm.setVisible(true);
         try {
             mm.SetDBandNN(SQLiteTxt.getText(), NNTxt.getText());

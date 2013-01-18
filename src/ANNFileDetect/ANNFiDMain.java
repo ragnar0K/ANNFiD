@@ -30,17 +30,17 @@ import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class ManniacMain extends javax.swing.JFrame {
+public class ANNFiDMain extends javax.swing.JFrame {
 
     /**
-     * Creates new form ManniacMain
+     * Creates new form ANNFiDMain
      */
     private static String DB = "";
     private static String NNs = "";
     private static SQLiteLib sqlite;
 
     
-    public ManniacMain() {
+    public ANNFiDMain() {
         initComponents();
         
     }
@@ -63,7 +63,7 @@ public class ManniacMain extends javax.swing.JFrame {
                     try {
                     UpdateText(NNList.getSelectedValue().toString());
                 } catch (SQLiteException ex) {
-                    Logger.getLogger(ManniacMain.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ANNFiDMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
            }
         });
@@ -289,13 +289,13 @@ public class ManniacMain extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManniacMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManniacMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManniacMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManniacMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -305,7 +305,7 @@ public class ManniacMain extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                //new ManniacMain().setVisible(true);
+                //new ANNFiDMain().setVisible(true);
             }
         });
     }
