@@ -19,7 +19,7 @@ package ANNFileDetect;
  *
  * @author ragnar0k@fabytes.com
  */
-public class Manniac {
+public class ANNFiD {
 
     /**
      * @param args the command line arguments

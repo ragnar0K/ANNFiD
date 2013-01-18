@@ -200,7 +200,7 @@ public class TrainingForm extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(TrainingForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-            ManniacMain mm = new ManniacMain();
+            ANNFiDMain mm = new ANNFiDMain();
             try {
                 mm.SetDBandNN(sqlfile.getDBFile(), ndir);
                 mm.setVisible(true);
