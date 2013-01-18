@@ -20,7 +20,7 @@
 
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
-import manniac.ThreshEdit;
+import ANNFileDetect.ThreshEdit;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;

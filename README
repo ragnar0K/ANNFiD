@@ -1,8 +1,8 @@
-MANNIAC
+ANNFiD
 
 --Generic stuff
 
-This repository was created in case anyone wants to contribute to the MANNIAC project. 
+This repository was created in case anyone wants to contribute to the ANNFiD project. 
 The program was developed under very tight time frames and code/routines need to be cleaned up. If you decide to help or contriute, feel free to contact me on the mail ragnar0k@fabytes.com - and feel free to visit the website http://fabytes.com for any suggestions!
 
 PS: If you end up using the software for any reason, a donation on the fabytes site would be great :)
@@ -16,7 +16,7 @@ Contribute as a java developer - maintenance and known issues:
 - Add additional methods, such as clustering to improve the identification
 
 Contribute without knowing java:
-- Improve the DB adding new file types in Manniac (i.e. DOC, ZIP, RAR and so on)
+- Improve the DB adding new file types in ANNFiD (i.e. DOC, ZIP, RAR and so on)
 - Improve the webpage design
 - Send ideas for improvements! It's easy, just click the 'Contact Me' thingy on the right side of the page
 - Donate :P
