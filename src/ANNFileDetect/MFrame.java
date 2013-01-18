@@ -38,7 +38,7 @@ public class MFrame extends javax.swing.JFrame {
      */
     public MFrame() {
         initComponents();
-        SQLiteTxt.setText("ManniacDB.sqlite");
+        SQLiteTxt.setText("ANNDB.sqlite");
         NNTxt.setText("nnets");
     }
 
