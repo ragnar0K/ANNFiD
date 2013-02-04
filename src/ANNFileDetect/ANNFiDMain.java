@@ -19,7 +19,6 @@ package ANNFileDetect;
  *
  * @author ragnar0k@fabytes.com
  */
-
 import com.almworks.sqlite4java.SQLiteException;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,6 +26,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -39,51 +39,47 @@ public class ANNFiDMain extends javax.swing.JFrame {
     private static String NNs = "";
     private static SQLiteLib sqlite;
 
-    
     public ANNFiDMain() {
         initComponents();
-        
+
     }
-    
-    public void SetDBandNN(String DBFile, String NNFolder) throws SQLiteException
-    {
+
+    public void SetDBandNN(String DBFile, String NNFolder) throws SQLiteException {
         DB = DBFile;
         NNs = NNFolder;
         sqlite = new SQLiteLib(DB);
         DefaultListModel mdl = new DefaultListModel();
         String[] tmpstr = sqlite.GetNetworkNames();
-        for (int i = 0; i < tmpstr.length; i++)
+        for (int i = 0; i < tmpstr.length; i++) {
             mdl.add(i, tmpstr[i]);
-        NNList.setModel(mdl);        
+        }
+        NNList.setModel(mdl);
         NNList.addListSelectionListener(new ListSelectionListener() {
-           public void valueChanged(ListSelectionEvent evt) {
-                if (evt.getValueIsAdjusting())
+            public void valueChanged(ListSelectionEvent evt) {
+                if (evt.getValueIsAdjusting()) {
                     return;
-                else
+                } else {
                     try {
-                    UpdateText(NNList.getSelectedValue().toString());
-                } catch (SQLiteException ex) {
-                    Logger.getLogger(ANNFiDMain.class.getName()).log(Level.SEVERE, null, ex);
+                        UpdateText(NNList.getSelectedValue().toString());
+                    } catch (SQLiteException ex) {
+                        Logger.getLogger(ANNFiDMain.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-           }
+            }
         });
     }
-    
-    public void UpdateText(String nn) throws SQLiteException
-    {
+
+    public void UpdateText(String nn) throws SQLiteException {
         Map<String, Map> hm = sqlite.GetNetworkData();
         Map<String, String> tmpMap = (Map<String, String>) hm.get(nn);
         String netFile = tmpMap.get("Network_File").toString();
         String translator = tmpMap.get("Network_Translator");
         EncogParse ep = new EncogParse(NNs + "/" + netFile);
-        String toWrite = "Name: " + nn + "\nFileName: " + netFile  + "\nTranslator: " + translator + 
-                "\nDescription: " + tmpMap.get("Description") + "\nLayout:\n" + ep.LayoutInfo();
+        String toWrite = "Name: " + nn + "\nFileName: " + netFile + "\nTranslator: " + translator
+                + "\nDescription: " + tmpMap.get("Description") + "\nLayout:\n" + ep.LayoutInfo();
         NNTextArea.setText(toWrite);
-        
+
     }
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -125,7 +121,6 @@ public class ANNFiDMain extends javax.swing.JFrame {
         });
 
         TestSingle.setText("Set results");
-        TestSingle.setEnabled(false);
         TestSingle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TestSingleActionPerformed(evt);
@@ -247,26 +242,46 @@ public class ANNFiDMain extends javax.swing.JFrame {
         en.setVisible(true);
     }//GEN-LAST:event_ChangeActionPerformed
 
-    
-
-    
     private void NewNetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewNetActionPerformed
-       TrainingForm tf = new TrainingForm();
-       tf.SetNNDir(NNs);
-       tf.SetSQL(sqlite);
-       tf.setVisible(true);
-       //this.dispose();
-       //this.setVisible(false);
+        TrainingForm tf = new TrainingForm();
+        tf.SetNNDir(NNs);
+        tf.SetSQL(sqlite);
+        tf.setVisible(true);
+        //this.dispose();
+        //this.setVisible(false);
     }//GEN-LAST:event_NewNetActionPerformed
 
     private void TestSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestSingleActionPerformed
-          new Thread(new MResults(sqlite)).start();  
+        //new Thread(new MResults(sqlite)).start();
+        new MResultsExec().execute();
     }//GEN-LAST:event_TestSingleActionPerformed
 
     private void TestAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestAllActionPerformed
-              detectFile df = new detectFile(sqlite, NNs);
-       df.setVisible(true);
+        new DFileExec().execute();
     }//GEN-LAST:event_TestAllActionPerformed
+
+    class MResultsExec extends SwingWorker<Integer, Integer> {
+
+        protected Integer doInBackground() throws Exception {
+            MResults mr = new MResults(sqlite);
+            return 42;
+        }
+
+        protected void done() {
+        }
+    }
+
+    class DFileExec extends SwingWorker<Integer, Integer> {
+
+        protected Integer doInBackground() throws Exception {
+            detectFile df = new detectFile(sqlite, NNs);
+            df.setVisible(true);
+            return 42;
+        }
+
+        protected void done() {
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -303,7 +318,6 @@ public class ANNFiDMain extends javax.swing.JFrame {
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
                 //new ANNFiDMain().setVisible(true);
             }

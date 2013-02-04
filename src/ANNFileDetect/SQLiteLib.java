@@ -19,10 +19,10 @@ package ANNFileDetect;
  *
  * @author ragnar0k@fabytes.com
  */
-
-
 import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteException;
+import com.almworks.sqlite4java.SQLiteJob;
+import com.almworks.sqlite4java.SQLiteQueue;
 import com.almworks.sqlite4java.SQLiteStatement;
 import java.io.File;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ import javax.swing.JTable;
 
 public class SQLiteLib {
 
-    SQLiteConnection conn;
-    String filename;
+    final SQLiteConnection conn;
+    final String filename;
 
     SQLiteLib(String SQLiteFile) {
         try {
@@ -47,21 +47,128 @@ public class SQLiteLib {
     }
 
     public String[] GetAllFinalResults() {
-        ArrayList al = new ArrayList();
+        SQLiteQueue queue = new SQLiteQueue(new File(filename));
+        queue.start();
+        ArrayList returned = queue.execute(new SQLiteJob<ArrayList>() {
+            protected ArrayList job(SQLiteConnection connection) throws SQLiteException {
+                SQLiteStatement st = connection.prepare("SELECT File_type, Results from Results");
+                try {
+                    ArrayList tmpa = new ArrayList();
+                    while (st.step()) {
+                        tmpa.add(st.columnValue(0).toString() + " =   " + st.columnValue(1).toString());
+                    }
+                    return tmpa;
+                } finally {
+                    st.dispose();
+                }
+
+            }
+        }).complete();
         try {
-            if (!conn.isOpen()) {
-                conn.open();
-            }
-            
-            SQLiteStatement st = conn.prepare("SELECT File_type, Results from Results");
-            while (st.step()) {
-                al.add(st.columnValue(0).toString() + " =   " + st.columnValue(1).toString());
-            }
-        } catch (Exception exc) {
-            System.out.println("Found exception: " + exc.toString());
+            queue.stop(true).join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SQLiteLib.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String[] out = new String[al.size()];
-        al.toArray(out);
+        String[] out = new String[returned.size()];
+        returned.toArray(out);
+        return out;
+    }
+
+    public boolean InsertNewFinalResultsType(final String type) {
+        SQLiteQueue queue = new SQLiteQueue(new File(filename));
+        queue.start();
+        boolean out = queue.execute(new SQLiteJob<Boolean>() {
+            protected Boolean job(SQLiteConnection connection) throws SQLiteException {
+                String insert = "Insert into Results values (\"" + type + "\", \"\")";
+                try {
+                    connection.exec(insert);
+                    return true;
+                } catch (Exception ex) {
+                    return false;
+                }
+
+            }
+        }).complete();
+        try {
+            queue.stop(true).join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SQLiteLib.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return out;
+    }
+    
+        public boolean InsertNewFinalResultsType(final String type, final String data) {
+        SQLiteQueue queue = new SQLiteQueue(new File(filename));
+        queue.start();
+        boolean out = queue.execute(new SQLiteJob<Boolean>() {
+            protected Boolean job(SQLiteConnection connection) throws SQLiteException {
+                String insert = "Insert into Results values (\"" + type + "\", \""+ data +"\")";
+                try {
+                    connection.exec(insert);
+                    return true;
+                } catch (Exception ex) {
+                    return false;
+                }
+
+            }
+        }).complete();
+        try {
+            queue.stop(true).join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SQLiteLib.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return out;
+    }
+    
+
+    public boolean DeleteFinalResultsType(final String type, final String content) {
+        SQLiteQueue queue = new SQLiteQueue(new File(filename));
+        queue.start();
+        boolean out = queue.execute(new SQLiteJob<Boolean>() {
+            protected Boolean job(SQLiteConnection connection) throws SQLiteException {
+                String insert = "delete from Results where File_Type like '" + type + "' and Results like '" + content + "'";
+                try {
+                    connection.exec(insert);
+                    return true;
+                } catch (Exception ex) {
+                    return false;
+                }
+
+            }
+        }).complete();
+        try {
+            queue.stop(true).join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SQLiteLib.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return out;
+    }
+
+    public String[] GetUniqueFTypeResults() {
+        SQLiteQueue queue = new SQLiteQueue(new File(filename));
+        queue.start();
+        ArrayList returned = queue.execute(new SQLiteJob<ArrayList>() {
+            protected ArrayList job(SQLiteConnection connection) throws SQLiteException {
+                SQLiteStatement st = connection.prepare("SELECT distinct file_type FROM Thresholds");
+                try {
+                    ArrayList tmpa = new ArrayList();
+                    while (st.step()) {
+                        tmpa.add(st.columnValue(0).toString());
+                    }
+                    return tmpa;
+                } finally {
+                    st.dispose();
+                }
+
+            }
+        }).complete();
+        try {
+            queue.stop(true).join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SQLiteLib.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String[] out = new String[returned.size()];
+        returned.toArray(out);
         return out;
     }
 
