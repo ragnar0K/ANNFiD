@@ -168,7 +168,6 @@
     <Component class="javax.swing.JButton" name="TestSingle">
       <Properties>
         <Property name="text" type="java.lang.String" value="Set results"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TestSingleActionPerformed"/>
