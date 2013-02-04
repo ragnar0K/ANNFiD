@@ -104,6 +104,7 @@ public class ANNFiDMain extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        Help = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -153,6 +154,13 @@ public class ANNFiDMain extends javax.swing.JFrame {
 
         jLabel6.setText("Set global results");
 
+        Help.setText("Need Help?");
+        Help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HelpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,37 +169,40 @@ public class ANNFiDMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(169, 169, 169))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(164, 164, 164))))
+                        .addComponent(jLabel5)
+                        .addGap(164, 164, 164))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(159, 159, 159)
-                                        .addComponent(jLabel2))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(210, 210, 210)
-                                        .addComponent(jLabel1)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(210, 210, 210)
+                                .addComponent(jLabel1)
+                                .addGap(0, 213, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2)
+                                    .addComponent(TestAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(143, 143, 143)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(163, 163, 163))
                                     .addComponent(NewNet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(Change, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
                                     .addComponent(TestSingle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(200, 200, 200)
-                                        .addComponent(jLabel6)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(TestAll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(147, 147, 147)
+                                                .addComponent(jLabel2))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(200, 200, 200)
+                                                .addComponent(jLabel6)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(Help, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,7 +226,6 @@ public class ANNFiDMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TestSingle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,7 +237,9 @@ public class ANNFiDMain extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(5, 5, 5)
                         .addComponent(NewNet, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGap(26, 26, 26)
+                        .addComponent(Help)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -260,33 +272,49 @@ public class ANNFiDMain extends javax.swing.JFrame {
         new DFileExec().execute();
     }//GEN-LAST:event_TestAllActionPerformed
 
-    class MResultsExec extends SwingWorker<Integer, Integer> {
+    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
 
-        protected Integer doInBackground() throws Exception {
-            MResults mr = new MResults(sqlite);
-            return 42;
-        }
+        if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
 
-        protected void done() {
+            System.err.println("Desktop doesn't support the browse action (fatal)");
+            System.exit(1);
         }
+        try {
+            java.net.URI uri = new java.net.URI("http://www.fabytes.com/fab/projects/");
+            desktop.browse(uri);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    
+    }//GEN-LAST:event_HelpActionPerformed
+
+class MResultsExec extends SwingWorker<Integer, Integer> {
+
+    protected Integer doInBackground() throws Exception {
+        MResults mr = new MResults(sqlite);
+        return 42;
     }
 
-    class DFileExec extends SwingWorker<Integer, Integer> {
+    protected void done() {
+    }
+}
 
-        protected Integer doInBackground() throws Exception {
-            detectFile df = new detectFile(sqlite, NNs);
-            df.setVisible(true);
-            return 42;
-        }
+class DFileExec extends SwingWorker<Integer, Integer> {
 
-        protected void done() {
-        }
+    protected Integer doInBackground() throws Exception {
+        detectFile df = new detectFile(sqlite, NNs);
+        df.setVisible(true);
+        return 42;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    protected void done() {
+    }
+}
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /*
          * Set the Nimbus look and feel
          */
@@ -301,16 +329,32 @@ public class ANNFiDMain extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ANNFiDMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ANNFiDMain.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ANNFiDMain.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ANNFiDMain.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ANNFiDMain.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -325,6 +369,7 @@ public class ANNFiDMain extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Change;
+    private javax.swing.JButton Help;
     private javax.swing.JList NNList;
     private javax.swing.JTextArea NNTextArea;
     private javax.swing.JButton NewNet;
