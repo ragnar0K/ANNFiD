@@ -50,15 +50,18 @@ public class MResults extends javax.swing.JFrame {
         this.setVisible(true);
         sql = sl;
         initComponents();
-        String[] ftypes = sql.GetUniqueFTypeResults();
-        for (String str : ftypes) {
-            FTypesCombo.addItem(str);
-        }
         runStuff();
     }
-    
+
     public void runStuff() {
-                DefaultListModel mdl = new DefaultListModel();
+        String[] ftypes = sql.GetUniqueFTypeResults();
+        int cnt = FTypesCombo.getItemCount();
+        if ( cnt == 0) {
+            for (String str : ftypes) {
+                FTypesCombo.addItem(str);
+            }
+        }
+        DefaultListModel mdl = new DefaultListModel();
         String[] tmp = sql.GetAllFinalResults();
         for (int i = 0; i < tmp.length; i++) {
             mdl.add(i, tmp[i].toString());
@@ -70,62 +73,7 @@ public class MResults extends javax.swing.JFrame {
                 if (evt.getValueIsAdjusting()) {
                     return;
                 } else {
-
-                    FTypeCB.removeActionListener(al);
-                    String tmp = EList.getSelectedValue().toString();
-                    String[] fp = tmp.split(" =   ");
-                    
-                    typeLBL.setText("Modifying type: " + fp[0]);
-                    if (fp.length > 1) {
-                    String[] vals = fp[1].split(",");
-                    ArrayList tal = new ArrayList();
-                    try {
-                        FTypeCB.removeAllItems();
-                    } catch (Exception ex) {
-                        System.out.println(ex.toString());
-                    }
-                    filesVals = new HashMap();
-                    for (int i = 0; i < vals.length; i++) {
-                        String[] tvals = vals[i].split("( > | < )");
-                        //tal.add(i, tvals[0]);
-                        FTypeCB.addItem(vals[i]);
-                        double tmpdbl = Double.parseDouble(tvals[1]);
-                        if (i == 0) {
-                            Slider.setValue((int) (tmpdbl * 10000));
-                            if (vals[i].contains("<")) {
-                                mmCB.setSelectedIndex(1);
-                            } else {
-                                mmCB.setSelectedIndex(0);
-
-                            }
-                        }
-                        String toPut = vals[i].split(" ")[1] + vals[i].split(" ")[2];
-                        if (!filesVals.containsKey(tvals[0])) {
-                            filesVals.put(tvals[0], toPut);
-                        }
-                        else {
-                            filesVals.put(tvals[0], filesVals.get(tvals[0]) + "::" + toPut);
-                        }
-                    }
-                    }
-                    else {
-                        FTypeCB.removeAllItems();
-                        FTypeCB.addItem("No items for this type");
-                    }
-                    FTypeCB.repaint();
-                    al = new ActionListener() {
-                        public void actionPerformed(ActionEvent event) {
-                            String toSearch = FTypeCB.getSelectedItem().toString();
-                            String[] vals = toSearch.split(" ");
-                            String mm = vals[1];
-                            String val = vals[2];
-                            mmCB.setSelectedItem(mm);
-                            Slider.setValue((int) (Double.parseDouble(val) * 10000));
-                        }
-                    };
-
-                    FTypeCB.addActionListener(al);
-
+                    CLS();
                 }
             }
         });
@@ -140,8 +88,63 @@ public class MResults extends javax.swing.JFrame {
 
 
     }
-    
-    
+
+    public void CLS() {
+
+        FTypeCB.removeActionListener(al);
+        String tmp = EList.getSelectedValue().toString();
+        String[] fp = tmp.split(" =   ");
+
+        typeLBL.setText("Modifying type: " + fp[0]);
+        if (fp.length > 1) {
+            String[] vals = fp[1].split(",");
+            ArrayList tal = new ArrayList();
+            try {
+                FTypeCB.removeAllItems();
+            } catch (Exception ex) {
+                System.out.println(ex.toString());
+            }
+            filesVals = new HashMap();
+            for (int i = 0; i < vals.length; i++) {
+                String[] tvals = vals[i].split("( > | < )");
+                //tal.add(i, tvals[0]);
+                FTypeCB.addItem(vals[i]);
+                double tmpdbl = Double.parseDouble(tvals[1]);
+                if (i == 0) {
+                    Slider.setValue((int) (tmpdbl * 10000));
+                    if (vals[i].contains("<")) {
+                        mmCB.setSelectedIndex(1);
+                    } else {
+                        mmCB.setSelectedIndex(0);
+
+                    }
+                }
+                String toPut = vals[i].split(" ")[1] + vals[i].split(" ")[2];
+                if (!filesVals.containsKey(tvals[0])) {
+                    filesVals.put(tvals[0], toPut);
+                } else {
+                    filesVals.put(tvals[0], filesVals.get(tvals[0]) + "::" + toPut);
+                }
+            }
+        } else {
+            FTypeCB.removeAllItems();
+            FTypeCB.addItem("No items for this type");
+        }
+        FTypeCB.repaint();
+        al = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                String toSearch = FTypeCB.getSelectedItem().toString();
+                String[] vals = toSearch.split(" ");
+                String mm = vals[1];
+                String val = vals[2];
+                mmCB.setSelectedItem(mm);
+                Slider.setValue((int) (Double.parseDouble(val) * 10000));
+            }
+        };
+
+        FTypeCB.addActionListener(al);
+
+    }
 
     public void run() {
         this.setVisible(true);
@@ -307,25 +310,40 @@ public class MResults extends javax.swing.JFrame {
     private void NewTshBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewTshBTNActionPerformed
         FTypeCB.addItem(FTypesCombo.getSelectedItem().toString() + " > 0");
         FTypeCB.setSelectedIndex(FTypeCB.getItemCount() - 1);
+        try {
+            saveItems();
+            //runStuff();
+            //CLS();
+            int toSelect = EList.getComponentCount() - 1;
+            EList.setSelectedIndex(toSelect);
+        } catch (Exception exc) {
+            System.out.println(exc.toString());
+        }
     }//GEN-LAST:event_NewTshBTNActionPerformed
 
     private void AddBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddBTNActionPerformed
         String fType = JOptionPane.showInputDialog(null, "Enter the file type result", "File type", 1);
         boolean outcome = sql.InsertNewFinalResultsType(fType);
         if (outcome) {
-            DefaultListModel mdl = (DefaultListModel) EList.getModel();
-            mdl.add(mdl.getSize(), fType.toString());
-            EList.setModel(mdl);
+            /*
+             DefaultListModel mdl = (DefaultListModel) EList.getModel();
+             mdl.add(mdl.getSize(), fType.toString());
+             EList.setModel(mdl);
+             EList.repaint();
+            
+             */
+            runStuff();
         }
+        //runStuff();
+        //CLS();
     }//GEN-LAST:event_AddBTNActionPerformed
 
     private void RemoveBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveBTNActionPerformed
         String[] fp = EList.getSelectedValue().toString().split(" =   ");
         boolean outcome = false;
         if (fp.length > 1) {
-        outcome = sql.DeleteFinalResultsType(fp[0], fp[1]);
-        }
-        else {
+            outcome = sql.DeleteFinalResultsType(fp[0], fp[1]);
+        } else {
             outcome = sql.DeleteFinalResultsType(fp[0], "");
         }
         if (outcome) {
@@ -341,6 +359,7 @@ public class MResults extends javax.swing.JFrame {
         FTypeCB.addItem(selected.split(" ")[0] + " " + mm + " " + val);
         FTypeCB.removeItem(selected);
         saveItems();
+        runStuff();
     }//GEN-LAST:event_SetBTNActionPerformed
 
     public void saveItems() {
@@ -348,19 +367,24 @@ public class MResults extends javax.swing.JFrame {
         String tmpFill = "";
         for (int i = 0; i < FTypeCB.getItemCount(); i++) {
             if (tmpFill.length() == 0) {
-                tmpFill = FTypeCB.getItemAt(i).toString();
-            }
-            else {
+                if (!FTypeCB.getItemAt(i).toString().contains("No items for this type")) {
+                    tmpFill = FTypeCB.getItemAt(i).toString();
+                }
+            } else {
                 tmpFill = tmpFill + "," + FTypeCB.getItemAt(i).toString();
             }
         }
-        sql.DeleteFinalResultsType(oldStuff[0], oldStuff[1]);
+        if (oldStuff.length == 1) {
+            sql.DeleteFinalResultsType(oldStuff[0], "");
+        } else {
+            sql.DeleteFinalResultsType(oldStuff[0], oldStuff[1]);
+        }
         sql.InsertNewFinalResultsType(oldStuff[0], tmpFill);
         runStuff();
-        
+        //CLS();
+
     }
-    
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String selected = FTypeCB.getSelectedItem().toString();
         FTypeCB.removeItem(selected);
