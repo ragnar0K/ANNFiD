@@ -1,6 +1,6 @@
 # ANNFiD — Artificial Neural Network File Detector (2013)
 
-> **Historical Time Capsule (2013)**: This is a very old project from when I graduated—back when "Transformers" were only something out of *Star Trek*—four years before *Attention Is All You Need* and LLM Transformers existed.
+> **Historical Time Capsule (2013)**: This is a very old project from when I graduated—back when Java and CPU was all we had—four years before *Attention Is All You Need* and LLM Transformers existed.
 
 **ANNFiD** (*Artificial Neural Network File Detect*) is an early experiment in applying classical feedforward Artificial Neural Networks (built with [Encog](https://www.heatonresearch.com/encog/) in Java) to **forensic file type identification of corrupted or headerless files**.
 
